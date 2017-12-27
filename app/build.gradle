@@ -20,11 +20,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
@@ -32,14 +33,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //rxjava2.0
     implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'                  //目前只发现只一个功能，将观察者定义到主线程中AndroidSchedulers.mainThread()
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //目前只发现只一个功能，将观察者定义到主线程中AndroidSchedulers.mainThread()
     //rxlifecycle2
     compile 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.1'
     compile 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
     //retrifit2.0
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'          //网络访问retrofit2
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'    //ConverterFactory的Gson依赖包，用于对获取的数据进行解析转换为请求实体
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'   //采用rxjava适配器
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    //网络访问retrofit2
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //ConverterFactory的Gson依赖包，用于对获取的数据进行解析转换为请求实体
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    //采用rxjava适配器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     //gson
     implementation 'com.google.code.gson:gson:2.8.2'
