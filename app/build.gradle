@@ -20,7 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.2'
+
+    kapt {
+        generateStubs = true//将第三方库先生成class在用kotlin注解(glide)
+    }
 }
 
 dependencies {
@@ -48,4 +51,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     //gson
     implementation 'com.google.code.gson:gson:2.8.2'
+    //图像加载
+    implementation 'com.github.bumptech.glide:glide:4.3.1'//4.4需要使用27
+    kapt 'com.github.bumptech.glide:compiler:4.3.1'//kotlin'中使用注解AppGlideModule
 }
