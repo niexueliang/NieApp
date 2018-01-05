@@ -28,7 +28,3 @@ interface MainComponent {
     fun inject(activity: Dragger2Activity)
 }
 
-class test {
-    init {
-    }
-}
