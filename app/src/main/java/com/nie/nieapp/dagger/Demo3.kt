@@ -8,7 +8,7 @@ import dagger.Provides
 import javax.inject.Inject
 
 
-class MainPresenter @Inject constructor(name:String,private val context: Context) {
+class MainPresenter @Inject constructor(private val context: Context) {
     fun loadData() {
         Toast.makeText(context, "didadia", Toast.LENGTH_LONG).show()
     }
