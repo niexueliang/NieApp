@@ -22,7 +22,12 @@ android {
     }
 
     kapt {
-        generateStubs = true//将第三方库先生成class在用kotlin注解(glide)
+        //有些注入框架需要你打开Kapt，但是这样会拖慢你的bulid速度，所以其默认是false
+        generateStubs = true//将class转成class stub，这样可以使用注入(GlideApp)
+    }
+
+    dataBinding {
+        enabled true
     }
 }
 
@@ -54,4 +59,9 @@ dependencies {
     //图像加载
     implementation 'com.github.bumptech.glide:glide:4.3.1'//4.4需要使用27
     kapt 'com.github.bumptech.glide:compiler:4.3.1'//kotlin'中使用注解AppGlideModule
+    //kotlin databinding
+    kapt "com.android.databinding:compiler:3.0.1"
+    //依赖注入 dagger2
+    compile "com.google.dagger:dagger:2.11"
+    kapt 'com.google.dagger:dagger-compiler:2.11'
 }
