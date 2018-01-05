@@ -1,21 +1,32 @@
 package com.nie.nieapp.glide
 
-import android.os.Build
-import android.renderscript.Allocation
-import android.renderscript.ScriptIntrinsicBlur
-import android.renderscript.RenderScript
-import android.graphics.Bitmap
 import android.annotation.TargetApi
 import android.content.Context
+import android.graphics.Bitmap
+import android.os.Build
+import android.renderscript.Allocation
 import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
+import android.support.annotation.NonNull
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
+import java.security.MessageDigest
 
 
 /**
  * 说明：
  * Created by code_nil on 2017/12/29.
  */
-object BlurBitmapUtil  {
+class BlurTransformation(private val context: Context) : BitmapTransformation() {
+    override fun transform(@NonNull pool: BitmapPool, @NonNull toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
+        return blurBitmap(context, toTransform, 20f, outWidth, outHeight)
+    }
+
+    override fun updateDiskCacheKey(messageDigest: MessageDigest) {}
+
     /**
+     * 用于生产bitmap的方法
      * @param context   上下文对象
      * @param image     需要模糊的图片
      * @param outWidth  输入出的宽度
@@ -48,5 +59,4 @@ object BlurBitmapUtil  {
         tmpOut.copyTo(outputBitmap)
         return outputBitmap
     }
-
 }

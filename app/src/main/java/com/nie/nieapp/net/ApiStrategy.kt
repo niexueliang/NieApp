@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
  * Created by code_nil on 2017/12/22.
  */
 object ApiStrategy {
-    private val BASE_URL = "https://api.douban.com/v2/movie/"
+     val BASE_URL = "https://api.douban.com/v2/movie/"
     //读超时长，单位：毫秒
     private val READ_TIME_OUT = 7676L
     //连接时长，单位：毫秒
