@@ -1,0 +1,12 @@
+layer							层							
+persistence  					持久
+persistence layer  				持久层
+autoGenerate					自动生成 （Room主键关键词）
+PrimaryKey						主键
+Conflict						冲突
+Strategy						策略
+volatile 						不稳定(kotlin、java中的一种轻度的synchronized)
+Provider						提供者
+component						成分；组件(dragger2的一个注解类的词)
+graph							图表
+mock							模拟的
