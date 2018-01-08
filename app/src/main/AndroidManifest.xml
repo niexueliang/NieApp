@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".glide.GlideActivity" />
-        <activity android:name=".dagger.Dragger2Activity">
+        <activity android:name=".dagger.Dagger2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
