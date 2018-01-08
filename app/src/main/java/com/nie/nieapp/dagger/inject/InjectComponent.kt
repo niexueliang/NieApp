@@ -1,6 +1,5 @@
 package com.nie.nieapp.dagger.inject
 
-import com.nie.nieapp.dagger.Dagger2Activity
 import dagger.Component
 
 /**
@@ -8,5 +7,5 @@ import dagger.Component
  */
 @Component
 interface InjectComponent {
-    fun inject(activity: Dagger2Activity)
+    fun inject(activity: InjectActivity)
 }

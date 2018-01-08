@@ -10,8 +10,9 @@ import javax.inject.Named
 @Module
 class ParamModule{
 
-    @Provides
-    fun provideModuleParamNie()=ModuleParam(ModuleBean("niexueliang","man"))
+    @Provides @Named("nxl")
+    fun provideModuleParamNxl()=ModuleParam("niexueliang")
 
-
+    @Provides @Named("xx")
+    fun provideModuleParamXx()=ModuleParam("xiongyaqiong")
 }
