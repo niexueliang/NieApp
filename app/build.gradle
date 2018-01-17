@@ -57,6 +57,8 @@ dependencies {
     //glide 图像加载
     implementation 'com.github.bumptech.glide:glide:4.3.1'//4.4需要使用27
     kapt 'com.github.bumptech.glide:compiler:4.3.1'//kotlin'中使用注解AppGlideModule
+
+
     //databinding kotlin
     kapt "com.android.databinding:compiler:3.0.1"
     //dagger2依赖注入
