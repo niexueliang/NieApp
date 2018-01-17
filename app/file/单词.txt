@@ -10,3 +10,4 @@ Provider						提供者
 component						成分；组件(dragger2的一个注解类的词)
 graph							图表
 mock							模拟的
+Feature							特色特征

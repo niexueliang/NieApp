@@ -48,7 +48,8 @@ dependencies {
     compile 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
     //retrifit2.0
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0' //ConverterFactory的Gson依赖包，用于对获取的数据进行解析转换为请求实体
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    //ConverterFactory的Gson依赖包，用于对获取的数据进行解析转换为请求实体
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0' //采用rxjava适配器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'//okhttp日志
     //gson

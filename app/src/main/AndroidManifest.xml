@@ -14,14 +14,16 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".glide.GlideActivity" />
-        <activity android:name=".dagger.module.Dagger2Activity">
+        <activity android:name=".dagger.module.Dagger2Activity"></activity>
+        <activity android:name=".dagger.inject.InjectActivity">
+        </activity>
+        <activity android:name=".dagger.case1.Case1Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dagger.inject.InjectActivity"></activity>
     </application>
 
 </manifest>
