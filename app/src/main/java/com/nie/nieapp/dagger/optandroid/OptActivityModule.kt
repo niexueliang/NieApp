@@ -1,9 +1,12 @@
 package com.nie.nieapp.dagger.optandroid
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.nie.nieapp.dagger.normal.Student
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
+
 
 /**
  * 说明：
@@ -12,6 +15,7 @@ import javax.inject.Named
  */
 @Module
 class OptActivityModule {
+
     @Provides
     fun provideName(): String {
         return "OptActivityModule"
@@ -20,5 +24,11 @@ class OptActivityModule {
     @Provides
     fun provideStudent(): Student {
         return Student("aaa")
+    }
+
+    @Provides
+    @Named("opt")
+    fun provideOptSp(context: Context): SharedPreferences {
+        return context.getSharedPreferences("opt", Context.MODE_PRIVATE)
     }
 }

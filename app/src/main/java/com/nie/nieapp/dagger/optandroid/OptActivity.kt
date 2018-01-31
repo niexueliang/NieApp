@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.nie.nieapp.R
 import com.nie.nieapp.dagger.base.BaseActivity
-import com.nie.nieapp.dagger.base.BaseApp
+import com.nie.nieapp.dagger.base.App
 import com.nie.nieapp.dagger.normal.Student
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -22,18 +22,18 @@ class OptActivity : BaseActivity() {
     lateinit var name: String
 
     @Inject
-    lateinit var app: BaseApp
+    lateinit var app: App
 
     @Inject
-    lateinit var sp: SharedPreferences
-
-    @Inject
-    @Named("aaa")
     lateinit var student: Student
 
     @Inject
-    @Named("bbb")
-    lateinit var appStudent: Student
+    @field:Named("opt")
+    lateinit var optSp: SharedPreferences
+
+    @Inject
+    @field:Named("default")
+    lateinit var defaultSp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,9 @@ class OptActivity : BaseActivity() {
             val intent = Intent(this, Opt2Activity::class.java)
             intent.putExtra("name", name)
             startActivity(intent)
-            Log.e("OptActivity", "app:::$app::::student$student:::::appStudent$appStudent")
+            Log.e("OptActivity", "app:::$app::::student$student" +
+                    ":::::appStudent$student:::::sp::$optSp" +
+                    ":::::defaultSp$defaultSp")
         }
 
         fl_test.setOnClickListener {

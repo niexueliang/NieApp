@@ -1,8 +1,13 @@
 package com.nie.nieapp.dagger.optandroid
 
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import com.nie.nieapp.dagger.normal.Student
 import dagger.Module
 import dagger.Provides
+import javax.inject.Inject
 
 /**
  * 说明：
@@ -20,4 +25,5 @@ class Opt2ActivityModule {
     fun provideStudent(): Student {
         return Student("Opt2ActivityModule")
     }
+
 }

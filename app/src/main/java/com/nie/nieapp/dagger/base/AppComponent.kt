@@ -11,8 +11,8 @@ import dagger.android.support.AndroidSupportInjectionModule
  */
 @Component(modules = [AndroidInjectionModule::class,
     AndroidSupportInjectionModule::class,
-    BaseAppModule::class,//app的module，可以得到application提供的实例
+    AppModule::class,//app的module，可以得到application提供的实例
     BaseModule::class])
-interface BaseAppComponent {
-    fun inject(application: BaseApp)
+interface AppComponent {
+    fun inject(application: App)
 }

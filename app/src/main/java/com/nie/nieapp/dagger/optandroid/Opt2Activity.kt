@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.nie.nieapp.R
 import com.nie.nieapp.dagger.base.BaseActivity
-import com.nie.nieapp.dagger.base.BaseApp
+import com.nie.nieapp.dagger.base.App
 import kotlinx.android.synthetic.main.activity_test.*
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class Opt2Activity : BaseActivity() {
     lateinit var name: String
 
     @Inject
-    lateinit var app: BaseApp
+    lateinit var app: App
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

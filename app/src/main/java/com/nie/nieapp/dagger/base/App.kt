@@ -14,7 +14,7 @@ import javax.inject.Inject
  * Created by code_nil on 2018/1/30.
  * 君子自强不息
  */
-class BaseApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
+class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -24,7 +24,7 @@ class BaseApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
     override fun onCreate() {
         super.onCreate()
-        DaggerBaseAppComponent.builder().baseAppModule(BaseAppModule(this)).build().inject(this)
+        DaggerAppComponent.builder().appModule(AppModule(this)).build().inject(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

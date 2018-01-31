@@ -1,10 +1,11 @@
 package com.nie.nieapp.dagger.base
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.nie.nieapp.dagger.base.BaseApp
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 
 /**
  * 说明：
@@ -12,15 +13,20 @@ import dagger.Provides
  * 君子自强不息
  */
 @Module
-class BaseAppModule(val app: BaseApp) {
+class AppModule(val app: App) {
     @Provides
-    fun provideSharedPrefrence(): SharedPreferences {
+    @Named("default")
+    fun provideDefaultSharedPrefrence(): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(app.applicationContext)
     }
 
     @Provides
-    fun provideOptApp(): BaseApp {
+    fun provideApp(): App {
         return app
     }
 
+    @Provides
+    fun provideContext(): Context {
+        return app.applicationContext
+    }
 }

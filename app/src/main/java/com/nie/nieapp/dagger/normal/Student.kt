@@ -8,4 +8,4 @@ import javax.inject.Inject
  * Created by code_nil on 2018/1/30.
  * 君子自强不息
  */
-data class Student  constructor(var name: String) :Serializable
+data class Student  (var name: String) :Serializable
