@@ -3,7 +3,6 @@ package com.nie.nieapp.dagger.inject
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.nie.nieapp.R
-import com.nie.nieapp.application.App
 import kotlinx.android.synthetic.main.activity_inject.*
 import javax.inject.Inject
 
