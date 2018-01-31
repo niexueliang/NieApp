@@ -11,7 +11,7 @@ import dagger.android.AndroidInjector
  */
 @Subcomponent(modules = [AndroidInjectionModule::class])
 interface BaseComponent : AndroidInjector<Any> {
-    //这里不指定类型，所以不转化为kotlin
+    //指定类型为Any 表示为任意类型提供builder
     //每一个继承BaseActivity/BaseFragmnent的Activity/Fragment，都共享同一个SubComponent
     @Subcomponent.Builder
     abstract class Builder : AndroidInjector.Builder<Any>()
