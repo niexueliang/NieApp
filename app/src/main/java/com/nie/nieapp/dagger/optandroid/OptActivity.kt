@@ -8,9 +8,12 @@ import com.nie.nieapp.R
 import com.nie.nieapp.dagger.base.BaseActivity
 import com.nie.nieapp.dagger.base.App
 import com.nie.nieapp.dagger.normal.Student
+import com.xly.netservice.net.ApiService
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.concurrent.thread
 
 /**
  * 说明：
@@ -35,6 +38,9 @@ class OptActivity : BaseActivity() {
     @field:Named("default")
     lateinit var defaultSp: SharedPreferences
 
+    @Inject
+    lateinit var apiService: ApiService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,9 +54,14 @@ class OptActivity : BaseActivity() {
         }
 
         fl_test.setOnClickListener {
-            val trans = supportFragmentManager.beginTransaction()
-            trans.add(R.id.fl_test, Opt3Fragment())
-            trans.commit()
+            thread {
+                apiService
+                        .getTopMovie(0, 10)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe {
+                            Log.e("apiService", it.toString())
+                        }
+            }
         }
     }
 }

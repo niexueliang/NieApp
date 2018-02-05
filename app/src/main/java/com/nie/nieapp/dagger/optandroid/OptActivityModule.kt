@@ -25,7 +25,7 @@ class OptActivityModule {
     fun provideStudent(): Student {
         return Student("aaa")
     }
-
+    //这里的context直接有application提供
     @Provides
     @Named("opt")
     fun provideOptSp(context: Context): SharedPreferences {
