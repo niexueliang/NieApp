@@ -1,5 +1,9 @@
 package com.nie.nieapp.dfamatch
+
 import android.os.Environment
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.InputStreamReader
 import java.nio.charset.Charset
 
 /**
@@ -16,18 +20,23 @@ class SearchFile {
     fun searchFileLine() {
         val file = Environment.getExternalStorageDirectory()
         val keyMap = DfaMatch.createSensitiveMap(keyArray)
+        /**
+         * 仿造file的readline语法糖，解决开启两次的问题
+         */
         file.walk().maxDepth(Int.MAX_VALUE).filter { it.isFile && (it.extension == "txt") }.forEach {
             val headBuffer = ByteArray(3)
             val inputStream = it.inputStream()
             val readCount = inputStream.read(headBuffer)
-            var code = "utf-8"
+            var charset = "utf-8"
             if (readCount == 3) {
-                code = getTextCharset(headBuffer)
+                charset = getTextCharset(headBuffer)
             }
-            inputStream.close()
-            it.forEachLine(Charset.forName(code)) {
+            val br = BufferedReader(InputStreamReader(inputStream, charset))
+            br.forEachLine {
                 DfaMatch.searchSensitive(it, keyMap)
             }
+            inputStream.close()
+            br.close()
         }
     }
 
