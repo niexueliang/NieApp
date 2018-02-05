@@ -10,10 +10,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val a="aaaa".hashCode()
-        val b="aaab".hashCode()
+        val a = "aaaa".hashCode()
+        val b = "aaab".hashCode()
+        val sf = SearchFile()
         am_bt_data.setOnClickListener {
-            SearchFile().searchFileLine()
+//            sf.searchWordxFile()
+            sf.searchXlsxFile()
         }
     }
 }

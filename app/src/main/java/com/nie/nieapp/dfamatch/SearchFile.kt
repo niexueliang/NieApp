@@ -1,10 +1,16 @@
 package com.nie.nieapp.dfamatch
 
 import android.os.Environment
+import android.util.Xml
+import jxl.Cell
+import jxl.CellType
+import jxl.Workbook
+import org.textmining.text.extraction.WordExtractor
+import org.xmlpull.v1.XmlPullParser
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.nio.charset.Charset
+import java.util.zip.ZipFile
 
 /**
  * 说明：
@@ -12,7 +18,7 @@ import java.nio.charset.Charset
  * 君子自强不息
  */
 class SearchFile {
-    private val keyArray = arrayOf("法轮功", "血腥玛丽", "哈利", "肢解", "枪杀", "真主阿拉", "真主", "血腥", "av", "av女友", "国军", "圣战", "阿拉")
+    private val keyArray = arrayOf("法轮功", "血腥玛丽", "哈利", "肢解", "枪杀", "真主阿拉", "真主", "血腥", "av", "av女友", "国军", "圣战", "阿拉","买买提")
 
     /**
      * 检索sd卡下所有的文件
@@ -77,5 +83,101 @@ class SearchFile {
             return tmp
         }
         return utfBytes
+    }
+
+    fun searchWordFile() {
+        val file = Environment.getExternalStorageDirectory()
+        val keyMap = DfaMatch.createSensitiveMap(keyArray)
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "doc" }.forEach {
+            try {
+                val inputStream = FileInputStream(it)
+                val we = WordExtractor()
+                val text = we.extractText(inputStream)
+                DfaMatch.searchSensitive(text, keyMap)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun searchWordxFile() {
+        val file = Environment.getExternalStorageDirectory()
+        val keyMap = DfaMatch.createSensitiveMap(keyArray)
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "docx" }.forEach {
+            try {
+                val zipFile = ZipFile(it)
+                val xmlEntity = zipFile.getEntry("word/document.xml")
+                val xmlIs = zipFile.getInputStream(xmlEntity)
+                val xmlParser = Xml.newPullParser()
+                xmlParser.setInput(xmlIs, "utf-8")
+                var eventType = xmlParser.eventType
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    when (eventType) {
+                        XmlPullParser.START_TAG -> {
+                            val tag = xmlParser.name
+                            if (tag.equals("t", true)) {
+                                val txt = xmlParser.nextText()
+                                DfaMatch.searchSensitive(txt, keyMap)
+                            }
+                        }
+                    }
+                    eventType = xmlParser.next()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun searchXlsFile() {
+        val file = Environment.getExternalStorageDirectory()
+        val keyMap = DfaMatch.createSensitiveMap(keyArray)
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xls" }.forEach {
+            try {
+                val workBook = Workbook.getWorkbook(it)
+                workBook.sheets?.forEach {
+                    val columCount = it.columns
+                    val rowCount = it.rows
+                    for (i in 0 until columCount) {
+                        (0 until rowCount)
+                                .map { j -> it.getCell(i, j).contents }
+                                .forEach { DfaMatch.searchSensitive(it, keyMap) }
+                    }
+                }
+                workBook.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun searchXlsxFile() {
+        val file = Environment.getExternalStorageDirectory()
+        val keyMap = DfaMatch.createSensitiveMap(keyArray)
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xlsx" }.forEach {
+            val zipFile = ZipFile(it)
+            //解析sharedStrings文件
+            try {
+                val xmlEntity = zipFile.getEntry("xl/sharedStrings.xml")
+                val xmlIs = zipFile.getInputStream(xmlEntity)
+                val xmlParser = Xml.newPullParser()
+                xmlParser.setInput(xmlIs, "utf-8")
+                var eventType = xmlParser.eventType
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    when (eventType) {
+                        XmlPullParser.START_TAG -> {
+                            val tag = xmlParser.name
+                            if (tag.equals("t", true)) {
+                                val txt = xmlParser.nextText()
+                                DfaMatch.searchSensitive(txt, keyMap)
+                            }
+                        }
+                    }
+                    eventType = xmlParser.next()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }
