@@ -1,183 +1,122 @@
 package com.nie.nieapp.dfamatch
 
 import android.os.Environment
-import android.util.Xml
-import jxl.Cell
-import jxl.CellType
-import jxl.Workbook
-import org.textmining.text.extraction.WordExtractor
-import org.xmlpull.v1.XmlPullParser
-import java.io.BufferedReader
-import java.io.FileInputStream
-import java.io.InputStreamReader
-import java.util.zip.ZipFile
+import dagger.android.AndroidInjectionModule
+import dagger.android.support.AndroidSupportInjectionModule
+import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * 说明：
- * Created by code_nil on 2018/2/2.
+ * Created by code_nil on 2018/2/5.
  * 君子自强不息
  */
 class SearchFile {
-    private val keyArray = arrayOf("法轮功", "血腥玛丽", "哈利", "肢解", "枪杀", "真主阿拉", "真主", "血腥", "av", "av女友", "国军", "圣战", "阿拉","买买提")
 
-    /**
-     * 检索sd卡下所有的文件
-     */
-    fun searchFileLine() {
-        val file = Environment.getExternalStorageDirectory()
-        val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        /**
-         * 仿造file的readline语法糖，解决开启两次的问题
-         */
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.isFile && (it.extension == "txt") }.forEach {
-            val headBuffer = ByteArray(3)
-            val inputStream = it.inputStream()
-            val readCount = inputStream.read(headBuffer)
-            var charset = "utf-8"
-            if (readCount == 3) {
-                charset = getTextCharset(headBuffer)
-            }
-            val br = BufferedReader(InputStreamReader(inputStream, charset))
-            br.forEachLine {
-                DfaMatch.searchSensitive(it, keyMap)
-            }
-            inputStream.close()
-            br.close()
-        }
+    //搜搜apk文件
+    fun searchApkFile(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
+        return file
+                .walk()
+                .maxDepth(Int.MAX_VALUE)
+                .filter { it.isFile && it.extension == "apk" }
+                .mapTo(ArrayList()) { it }
+    }
+
+    //搜索视频文件
+    fun searchVideoFile(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
+        return file
+                .walk()
+                .maxDepth(Int.MAX_VALUE)
+                .filter {
+                    it.isFile && ((it.extension == "mp4")
+                            || (it.extension == "avi")
+                            || (it.extension == "mpeg")
+                            || (it.extension == "mov")
+                            || (it.extension == "asf")
+                            || (it.extension == "wmf")
+                            || (it.extension == "rm")
+                            || (it.extension == "rmvb")
+                            || (it.extension == "flv")
+                            || (it.extension == "swf"))
+
+                }
+                .mapTo(ArrayList()) { it }
     }
 
     /**
-     * 获取text文本的编码
+     * 检索视频文件
      */
-    fun getTextCharset(head: ByteArray): String {
-        var code = "gb2312"
-        if (head[0].toInt() == -1 && head[1].toInt() == -2)
-            code = "utf-16"
-        if (head[0].toInt() == -2 && head[1].toInt() == -1)
-            code = "unicode"
-        if (head[0].toInt() == -17 && head[1].toInt() == -69 && head[2].toInt() == -65)
-            code = "utf-8"
-        return code
-    }
+    fun searchVideFile(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
+        val videKeyMap = DfaMatch.createSensitiveMapBytes(createHeaderList())
+        val resultList = arrayListOf<File>()
+        return file.walk().maxDepth(Int.MAX_VALUE).filter {
+            var isVideo = false
+            if (it.isFile) {
+                //读取文件头
+                val headBuffer = ByteArray(16)
+                val inputStream = it.inputStream()
+                inputStream.read(headBuffer)
+                inputStream.close()
+                DfaMatch.searchSensitiveMapBytes(headBuffer, videKeyMap) { startPosition, bytes ->
+                    run {
+                        val resultArray = bytes.toByteArray()
+                        when (startPosition) {
+                            0 -> isVideo = (resultArray.contentEquals(t_rmvb)
+                                    || resultArray.contentEquals(t_mpeg))
+                                    || (resultArray.contentEquals(t_wmf_1)
+                                    || resultArray.contentEquals(t_wmf_2))
 
-    /**
-     * 将gbk字符串转化为utf-8数组
-     */
-    fun getUTF8BytesFromGBKString(gbkStr: String): ByteArray {
-        val n = gbkStr.length
-        val utfBytes = ByteArray(3 * n)
-        var k = 0
-        for (i in 0 until n) {
-            val m = gbkStr[i].toInt()
-            if (m in 0..127) {
-                utfBytes[k++] = m.toByte()
-                continue
-            }
-            utfBytes[k++] = (0xe0 or (m shr 12)).toByte()
-            utfBytes[k++] = (0x80 or (m shr 6 and 0x3f)).toByte()
-            utfBytes[k++] = (0x80 or (m and 0x3f)).toByte()
-        }
-        if (k < utfBytes.size) {
-            val tmp = ByteArray(k)
-            System.arraycopy(utfBytes, 0, tmp, 0, k)
-            return tmp
-        }
-        return utfBytes
-    }
-
-    fun searchWordFile() {
-        val file = Environment.getExternalStorageDirectory()
-        val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "doc" }.forEach {
-            try {
-                val inputStream = FileInputStream(it)
-                val we = WordExtractor()
-                val text = we.extractText(inputStream)
-                DfaMatch.searchSensitive(text, keyMap)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    fun searchWordxFile() {
-        val file = Environment.getExternalStorageDirectory()
-        val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "docx" }.forEach {
-            try {
-                val zipFile = ZipFile(it)
-                val xmlEntity = zipFile.getEntry("word/document.xml")
-                val xmlIs = zipFile.getInputStream(xmlEntity)
-                val xmlParser = Xml.newPullParser()
-                xmlParser.setInput(xmlIs, "utf-8")
-                var eventType = xmlParser.eventType
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    when (eventType) {
-                        XmlPullParser.START_TAG -> {
-                            val tag = xmlParser.name
-                            if (tag.equals("t", true)) {
-                                val txt = xmlParser.nextText()
-                                DfaMatch.searchSensitive(txt, keyMap)
-                            }
+                            4 -> isVideo = (resultArray.contentEquals(t_3gp_1))
+                                    || (resultArray.contentEquals(t_3gp_2)
+                                    || resultArray.contentEquals(t_3gp_3)
+                                    || resultArray.contentEquals(t_mp4_1)
+                                    || resultArray.contentEquals(t_mp4_2))
+                            8 -> isVideo = resultArray.contentEquals(t_avi)
                         }
                     }
-                    eventType = xmlParser.next()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
-        }
+            isVideo
+        }.mapTo(resultList) { it }
     }
 
-    fun searchXlsFile() {
-        val file = Environment.getExternalStorageDirectory()
-        val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xls" }.forEach {
-            try {
-                val workBook = Workbook.getWorkbook(it)
-                workBook.sheets?.forEach {
-                    val columCount = it.columns
-                    val rowCount = it.rows
-                    for (i in 0 until columCount) {
-                        (0 until rowCount)
-                                .map { j -> it.getCell(i, j).contents }
-                                .forEach { DfaMatch.searchSensitive(it, keyMap) }
-                    }
-                }
-                workBook.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+    /**
+     *头匹配方式搜索视频文件
+     *已经扩展
+     *\.RMF     0   rm/rmvb
+     *\x00\x00\x01\xBA          0   mpeg
+     *\xD7\xCD\xC6\x9A\x00\x00  0   wmf
+     *\x01\x00\x09\x00\x00\x03  0   wmf
+     *
+     *ftyp3gp   4   3gp
+     *ftypmmp4  4   3gp
+     *ftypisom  4   3gp
+     *ftypmp42  4   mp4
+     *ftypdash  4   mp4
+     *AVI LIST  8   avi
+     *
+     *以下格式不常见不做扩展
+     *FLV\x01[\x01\x04\x05\x0D] 0   flv
+     *\x30\x26\xB2\x75\x8E\x66\xCF\x11\xA6\xD9\x00\xAA\x00\x62\xCE\x6C  0 asf
+     *[CF]WS[\x02-\x15]         0   swf
+     */
+    fun createHeaderList(): ArrayList<ByteArray> {
+        return arrayListOf(t_rmvb, t_mpeg, t_wmf_1, t_wmf_2, t_3gp_1, t_3gp_2, t_3gp_3, t_mp4_1, t_mp4_2, t_avi)
     }
 
-    fun searchXlsxFile() {
-        val file = Environment.getExternalStorageDirectory()
-        val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xlsx" }.forEach {
-            val zipFile = ZipFile(it)
-            //解析sharedStrings文件
-            try {
-                val xmlEntity = zipFile.getEntry("xl/sharedStrings.xml")
-                val xmlIs = zipFile.getInputStream(xmlEntity)
-                val xmlParser = Xml.newPullParser()
-                xmlParser.setInput(xmlIs, "utf-8")
-                var eventType = xmlParser.eventType
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    when (eventType) {
-                        XmlPullParser.START_TAG -> {
-                            val tag = xmlParser.name
-                            if (tag.equals("t", true)) {
-                                val txt = xmlParser.nextText()
-                                DfaMatch.searchSensitive(txt, keyMap)
-                            }
-                        }
-                    }
-                    eventType = xmlParser.next()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+    companion object {
+        val t_rmvb = byteArrayOf(0x2e, 0x52, 0x4d, 0x46)
+        val t_mpeg = byteArrayOf(0x00, 0x00, 0x01, 0xba.toByte())
+        val t_wmf_1 = byteArrayOf(0xd7.toByte(), 0xcd.toByte(), 0xc6.toByte(), 0x9a.toByte(), 0x00, 0x00)
+        val t_wmf_2 = byteArrayOf(0x01, 0x00, 0x09, 0x00, 0x00, 0x03)
+        val t_3gp_1 = byteArrayOf(0x66, 0x74, 0x79, 0x70, 0x33, 0x67, 0x70)
+
+        val t_3gp_2 = byteArrayOf(0x66, 0x74, 0x79, 0x70, 0x6d, 0x6d, 0x70, 0x34)
+        val t_3gp_3 = byteArrayOf(0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D)
+        val t_mp4_1 = byteArrayOf(0x66, 0x74, 0x79, 0x70, 0x6d, 0x70, 0x34, 0x32)
+        val t_mp4_2 = byteArrayOf(0x66, 0x74, 0x79, 0x70, 0x64, 0x61, 0x73, 0x68)
+
+        val t_avi = byteArrayOf(0x41, 0x56, 0x49, 0x20, 0x4C, 0x49, 0x53, 0x54)
     }
 }
