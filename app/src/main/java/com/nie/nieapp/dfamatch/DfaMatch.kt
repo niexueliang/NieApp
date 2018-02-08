@@ -39,11 +39,11 @@ object DfaMatch {
 
     fun searchSensitive(data: String, keyMap: HashMap<Any, Any>) {
         val stringBuilder = StringBuilder()
-        var tempMap = keyMap
         for (i in 0 until data.length) {
-
-            for(j in i until  data.length){
-                val keyChar = data[i]
+            stringBuilder.setLength(0)
+            var tempMap = keyMap
+            for (j in i until data.length) {
+                val keyChar = data[j]
                 val nextMap = tempMap[keyChar]
                 if (nextMap != null) {//查到一个关键字
                     nextMap as HashMap<Any, Any>
@@ -96,10 +96,9 @@ object DfaMatch {
 
     fun searchSensitiveMapBytes(data: ByteArray, keyMap: HashMap<Any, Any>, action: (Int, ArrayList<Byte>) -> Unit) {
         val byteResult = arrayListOf<Byte>()
-        var tempMap = keyMap
         for (i in 0 until data.size) {
             byteResult.clear()   //重置数据
-            tempMap = keyMap     //重置字典
+            var tempMap = keyMap     //重置字典
             for (j in i until data.size) {
                 val keyChar = data[j]
                 val nextMap = tempMap[keyChar]

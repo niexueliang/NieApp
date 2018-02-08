@@ -1,6 +1,7 @@
 package com.nie.nieapp.dfamatch
 
 import android.os.Environment
+import android.util.Log
 import android.util.Xml
 import jxl.Cell
 import jxl.CellType
@@ -20,7 +21,7 @@ import java.util.zip.ZipFile
  * 君子自强不息
  */
 class MatchFile {
-    private val keyArray = arrayOf("法轮功", "血腥玛丽", "哈利", "肢解", "枪杀", "真主阿拉", "真主", "血腥", "av", "av女友", "国军", "圣战", "阿拉", "买买提")
+    private val keyArray = arrayOf("法轮功", "血腥玛丽", "哈利", "肢解", "枪杀", "真主阿拉", "真主", "血腥", "av", "av女友", "国军", "圣战", "阿拉", "买买提", "专家报告", "农业林业水利和气象支出")
 
     /**
      * 检索sd卡下所有的文件
@@ -39,9 +40,8 @@ class MatchFile {
                 charset = getTextCharset(headBuffer)
             }
             inputStream.close()
-            file.forEachLine(Charset.forName(charset)){
-                val matchTxt = it
-                DfaMatch.searchSensitive(matchTxt, keyMap)
+            it.forEachLine(Charset.forName(charset)) {
+                DfaMatch.searchSensitive(it, keyMap)
             }
         }
     }
@@ -49,7 +49,7 @@ class MatchFile {
     /**
      * 获取text文本的编码
      */
-    fun getTextCharset(head: ByteArray): String {
+    private fun getTextCharset(head: ByteArray): String {
         var code = "gb2312"
         if (head[0].toInt() == -1 && head[1].toInt() == -2)
             code = "utf-16"
@@ -63,7 +63,7 @@ class MatchFile {
     /**
      * 将gbk字符串转化为utf-8数组
      */
-    fun getUTF8BytesFromGBKString(gbkStr: String): ByteArray {
+    private fun getUTF8BytesFromGBKString(gbkStr: String): ByteArray {
         val n = gbkStr.length
         val utfBytes = ByteArray(3 * n)
         var k = 0
@@ -85,14 +85,14 @@ class MatchFile {
         return utfBytes
     }
 
-    fun searchWordFile() {
-        val file = Environment.getExternalStorageDirectory()
+    fun searchWordFile(file: File= Environment.getExternalStorageDirectory()) {
         val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "doc" }.forEach {
+        file.walk().maxDepth(Int.MAX_VALUE).filter {it.isFile && it.extension == "doc" }.forEach {
             try {
                 val inputStream = FileInputStream(it)
                 val we = WordExtractor()
                 val text = we.extractText(inputStream)
+                Log.e("WordFile","name${it.absolutePath}")
                 DfaMatch.searchSensitive(text, keyMap)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -100,8 +100,7 @@ class MatchFile {
         }
     }
 
-    fun searchWordxFile() {
-        val file = Environment.getExternalStorageDirectory()
+    fun searchWordxFile(file: File= Environment.getExternalStorageDirectory()) {
         val keyMap = DfaMatch.createSensitiveMap(keyArray)
         file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "docx" }.forEach {
             try {
@@ -129,10 +128,9 @@ class MatchFile {
         }
     }
 
-    fun searchXlsFile() {
-        val file = Environment.getExternalStorageDirectory()
+    fun searchXlsFile(file: File= Environment.getExternalStorageDirectory()) {
         val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xls" }.forEach {
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.isFile && it.extension == "xls" }.forEach {
             try {
                 val workBook = Workbook.getWorkbook(it)
                 workBook.sheets?.forEach {
@@ -154,7 +152,7 @@ class MatchFile {
     fun searchXlsxFile() {
         val file = Environment.getExternalStorageDirectory()
         val keyMap = DfaMatch.createSensitiveMap(keyArray)
-        file.walk().maxDepth(Int.MAX_VALUE).filter { it.extension == "xlsx" }.forEach {
+        file.walk().maxDepth(Int.MAX_VALUE).filter { it.isFile && it.extension == "xlsx" }.forEach {
             val zipFile = ZipFile(it)
             //解析sharedStrings文件
             try {

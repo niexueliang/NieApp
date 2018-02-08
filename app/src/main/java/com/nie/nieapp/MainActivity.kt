@@ -18,11 +18,36 @@ class MainActivity : AppCompatActivity() {
         val a = "aaaa".hashCode()
         val b = "aaab".hashCode()
         val sf = SearchFile()
+        val mf = MatchFile()
         am_bt_data.setOnClickListener {
-            //            val result=sf.searchVideFile(File(Environment.getExternalStorageDirectory().absolutePath+File.separator+"video"))
-//            Log.e(tag,"$result")
-            //File(Environment.getExternalStorageDirectory().absolutePath+File.separator+"xx.txt")
-            MatchFile().searchFileLine(File(Environment.getExternalStorageDirectory().absolutePath + File.separator + "xx.txt"))
+//            Log.e(tag, "视频文件检索")
+//            val videoList = sf.searchVfForHead()
+//            Log.e(tag, "$videoList")
+//
+//            Log.e(tag, "文本文件检索")
+//            val txtList = mf.searchFileLine()
+//            Log.e(tag, "$txtList")
+//
+//            Log.e(tag, "APK文件检索")
+//            val apkList = sf.searchApkFile()
+//            Log.e(tag, "$apkList")
+//
+//            Log.e(tag, "docx文件检索")
+//            val docxList = mf.searchWordxFile()
+//            Log.e(tag, "$docxList")
+//
+//
+            Log.e(tag, "xlsx文件检索")
+            val xlsxList = mf.searchXlsxFile()
+            Log.e(tag, "$xlsxList")
+
+//            Log.e(tag, "doc文件检索")
+//            val docList = mf.searchWordFile()
+//            Log.e(tag, "$docList")
+
+//            Log.e(tag, "xls文件检索")
+//            val xlsList = mf.searchXlsFile()
+//            Log.e(tag, "$xlsList")
         }
     }
 }

@@ -24,7 +24,7 @@ class SearchFile {
     }
 
     //搜索视频文件
-    fun searchVideoFile(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
+    fun searchVfForExtension(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
         return file
                 .walk()
                 .maxDepth(Int.MAX_VALUE)
@@ -47,7 +47,7 @@ class SearchFile {
     /**
      * 检索视频文件
      */
-    fun searchVideFile(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
+    fun searchVfForHead(file: File = Environment.getExternalStorageDirectory()): ArrayList<File> {
         val videKeyMap = DfaMatch.createSensitiveMapBytes(createHeaderList())
         val resultList = arrayListOf<File>()
         return file.walk().maxDepth(Int.MAX_VALUE).filter {
