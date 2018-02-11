@@ -4,7 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
 import android.support.v4.content.LocalBroadcastManager
+import android.util.Log
+import com.nie.nieapp.reciver.WifiReceiver
 
 /**
  * 说明：
@@ -12,17 +16,28 @@ import android.support.v4.content.LocalBroadcastManager
  * 君子自强不息
  */
 //LocalBroadcastReceiver
-class ReceiverDemo {
+object ReceiverDemo {
+    private val wifiReceiver =xxx()
+
     //local
-    fun localSend(context: Context) {
-        val rr = RdReceiver()
-        LocalBroadcastManager.getInstance(context).registerReceiver(rr, IntentFilter("LocalBroadcast"))
-        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent("LocalBroadcast"))
-        LocalBroadcastManager.getInstance(context).unregisterReceiver(rr)
+    fun localRegist(context: Context) {
+        val intentFilter = IntentFilter("111")
+        LocalBroadcastManager.getInstance(context).registerReceiver(wifiReceiver, intentFilter)
+        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent("111"))
     }
+
+
+    fun localUnRegist(context: Context) {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(wifiReceiver)
+    }
+
 }
 
-class RdReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
+class xxx : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action == "111") {
+            Log.e("WifiReceiver", "发射广播")
+        }
     }
+
 }

@@ -8,6 +8,7 @@ import com.nie.nieapp.R
 import com.nie.nieapp.dagger.base.BaseActivity
 import com.nie.nieapp.dagger.base.App
 import com.nie.nieapp.dagger.normal.Student
+import com.nie.nieapp.receiver.ReceiverCycle
 import com.xly.netservice.net.ApiService
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*

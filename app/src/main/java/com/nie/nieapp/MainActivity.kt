@@ -7,12 +7,14 @@ import android.util.Log
 import com.nie.nieapp.dfamatch.DfaMatch
 import com.nie.nieapp.dfamatch.MatchFile
 import com.nie.nieapp.dfamatch.SearchFile
+import com.nie.nieapp.receiver.ReceiverCycle
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
     var tag = "MainActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
+        lifecycle.addObserver(ReceiverCycle(this))
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val a = "aaaa".hashCode()
