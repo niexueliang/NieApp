@@ -1,4 +1,4 @@
-package com.xly.netservice.rxjava2
+package com.nie.nieapp.rxjava
 
 import android.util.Log
 import io.reactivex.*
@@ -6,9 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function
-import io.reactivex.internal.operators.observable.ObservableObserveOn
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.Callable
 import java.util.concurrent.TimeUnit
 
 /**

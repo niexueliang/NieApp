@@ -1,4 +1,4 @@
-package com.xly.netservice.rxjava2
+package com.nie.nieapp.rxjava
 
 import android.util.Log
 import io.reactivex.Flowable
