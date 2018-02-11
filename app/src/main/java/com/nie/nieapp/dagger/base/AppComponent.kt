@@ -13,8 +13,8 @@ import dagger.android.support.AndroidSupportInjectionModule
 @Component(modules = [
     AndroidInjectionModule::class,
     AndroidSupportInjectionModule::class,
-    AppModule::class,//application的module，可以得到application提供的实例
-    ApiModule::class,//网络访问的module，提供网络访问实例
+    AppModule::class,//app的module，可以得到application提供的实例
+    ApiModule::class,//api的module,得到网络实例
     BaseModule::class])
 interface AppComponent {
     fun inject(application: App)

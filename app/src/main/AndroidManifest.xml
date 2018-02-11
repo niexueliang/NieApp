@@ -16,13 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".glide.GlideActivity" />
+        <activity android:name=".glide.GlideActivity">
+        </activity>
         <activity android:name=".dagger.module.Dagger2Activity"></activity>
         <activity android:name=".dagger.inject.InjectActivity"></activity>
         <activity android:name=".dagger.case1.Case1Activity"></activity>
@@ -36,15 +33,18 @@
 
         </activity>
 
-        <activity android:name=".dagger.android.TestActivity" />
+        <activity android:name=".dagger.android.TestActivity" >
+
+        </activity>
 
         <activity android:name=".dagger.optandroid.OptActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
-        <activity android:name=".dagger.optandroid.Opt2Activity">
-
-        </activity>
     </application>
 
 </manifest>

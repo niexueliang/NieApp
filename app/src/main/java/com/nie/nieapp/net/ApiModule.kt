@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 
 /**
  * 说明：
@@ -36,12 +37,28 @@ class ApiModule {
 
 
     @Provides
-    fun provideClient(context: Context): OkHttpClient {
+    fun provideClient(@Named("applicationContext") context: Context): OkHttpClient {
         return OkHttpClient
                 .Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .addInterceptor(OkhttpStrategy.httpLoggingInterceptor())
+//                .addInterceptor(OkhttpStrategy.mRewriteCacheControlInterceptor(context))
+//                .addNetworkInterceptor(OkhttpStrategy.mRewriteCacheControlInterceptor(context))
+//                .addInterceptor(OkhttpStrategy.headerInterceptor())
+//                .cache(OkhttpStrategy.cacheStrategy(context))
+                .build()
+    }
+
+    @Provides
+    @Named("v2")
+    fun provideClientHttps(@Named("applicationContext") context: Context): OkHttpClient {
+        return OkHttpClient
+                .Builder()
+                .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
+                .addInterceptor(OkhttpStrategy.httpLoggingInterceptor())
+//                .socketFactory(SslFactory.createFactory(context, "certificates"))
 //                .addInterceptor(OkhttpStrategy.mRewriteCacheControlInterceptor(context))
 //                .addNetworkInterceptor(OkhttpStrategy.mRewriteCacheControlInterceptor(context))
 //                .addInterceptor(OkhttpStrategy.headerInterceptor())

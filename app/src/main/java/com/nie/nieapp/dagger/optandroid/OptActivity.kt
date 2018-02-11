@@ -34,9 +34,6 @@ class OptActivity : BaseActivity() {
     @field:Named("opt")
     lateinit var optSp: SharedPreferences
 
-    @Inject
-    @field:Named("default")
-    lateinit var defaultSp: SharedPreferences
 
     @Inject
     lateinit var apiService: ApiService
@@ -45,12 +42,6 @@ class OptActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         am_bt_data.setOnClickListener {
-            val intent = Intent(this, Opt2Activity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
-            Log.e("OptActivity", "app:::$app::::student$student" +
-                    ":::::appStudent$student:::::sp::$optSp" +
-                    ":::::defaultSp$defaultSp")
         }
 
         fl_test.setOnClickListener {

@@ -3,6 +3,7 @@ package com.nie.nieapp.dagger.optandroid
 import android.content.Context
 import android.content.SharedPreferences
 import com.nie.nieapp.dagger.normal.Student
+import com.xly.netservice.net.ApiService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -28,7 +29,7 @@ class OptActivityModule {
     //这里的context直接有application提供
     @Provides
     @Named("opt")
-    fun provideOptSp(context: Context): SharedPreferences {
+    fun provideOptSp(@Named("applicationContext") context: Context): SharedPreferences {
         return context.getSharedPreferences("opt", Context.MODE_PRIVATE)
     }
 }
