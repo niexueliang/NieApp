@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
     //kotlin
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -42,41 +43,60 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
     //rxjava2.0
     implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
     //目前只发现只一个功能，将观察者定义到主线程中AndroidSchedulers.mainThread()
+
     //rxlifecycle2
     compile 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.1'
     compile 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
+
     //retrifit2.0
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     //ConverterFactory的Gson依赖包，用于对获取的数据进行解析转换为请求实体
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
     //采用rxjava适配器
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
     //okhttp日志
+
     //gson
     implementation 'com.google.code.gson:gson:2.8.2'
+
     //glide 图像加载
     implementation 'com.github.bumptech.glide:glide:4.3.1'
+
     //4.4需要使用27
     kapt 'com.github.bumptech.glide:compiler:4.3.1'
+
     //kotlin'中使用注解AppGlideModule
+
     //databinding kotlin
     kapt "com.android.databinding:compiler:3.0.1"
+
     //dagger2依赖注入
     compile 'com.google.dagger:dagger:2.11'
+
     //基础库
     kapt 'com.google.dagger:dagger-compiler:2.11'
+
     //基础库
     implementation 'com.google.dagger:dagger-android:2.11'
+
     //增强库 可选
     implementation 'com.google.dagger:dagger-android-support:2.11'
+
     //增强库 可选
     kapt 'com.google.dagger:dagger-android-processor:2.11'
+
     //增强库 可选
+
     // Architecture components
     implementation 'android.arch.lifecycle:runtime:1.1.0'
     implementation 'android.arch.lifecycle:extensions:1.1.0'
@@ -86,6 +106,8 @@ dependencies {
     implementation 'android.arch.persistence.room:rxjava2:1.0.0'
     implementation files('libs/jxl.jar')
     implementation files('libs/tm-extractors-0.4.jar')
+
     //websocket
     implementation 'org.java-websocket:Java-WebSocket:1.3.7'
+    implementation files('libs/commons-net-3.6.jar')
 }
