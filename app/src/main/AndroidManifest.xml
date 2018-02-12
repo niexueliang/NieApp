@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".dagger.base.App"
@@ -15,28 +15,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".glide.GlideActivity" />
+        <activity android:name=".dagger.module.Dagger2Activity" />
+        <activity android:name=".dagger.inject.InjectActivity" />
+        <activity android:name=".dagger.case1.Case1Activity" />
+        <activity android:name=".dagger.normal.NormalActivity" />
+        <activity android:name=".dagger.optandroid.OptActivity" />
+        <activity
+            android:name=".task.T1Activity"
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".glide.GlideActivity">
-        </activity>
-        <activity android:name=".dagger.module.Dagger2Activity"></activity>
-        <activity android:name=".dagger.inject.InjectActivity"></activity>
-        <activity android:name=".dagger.case1.Case1Activity"></activity>
-
-        <activity android:name=".dagger.normal.NormalActivity">
-
-        </activity>
-
-
-        <activity android:name=".dagger.optandroid.OptActivity">
-
-        </activity>
-
+        <activity
+            android:name=".task.T2Activity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".task.T3Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".task.T4Activity"
+            android:launchMode="singleInstance" />
     </application>
 
 </manifest>
