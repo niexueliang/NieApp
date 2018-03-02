@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.nie.nieapp.mvvm.MvvmActivity">
+    <Button
+        android:id="@+id/show"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="show"/>
+    
+    <Button
+        android:id="@+id/add"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="add"/>
+    
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="delete"/>
+</LinearLayout>

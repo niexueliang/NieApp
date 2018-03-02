@@ -18,6 +18,7 @@ object Rxjava2Demo {
     //create操作符，创建一个被观察者(发射器)
     fun createDemo() {
         var TAG = "create"
+        var disposable:Disposable?=null
         var sub = Observable.create(object : ObservableOnSubscribe<Int> {
             override fun subscribe(e: ObservableEmitter<Int>) {
                 Log.e(TAG, "Observable::send->1")
@@ -43,10 +44,14 @@ object Rxjava2Demo {
 
                     override fun onSubscribe(d: Disposable) {
                         Log.e(TAG, "Observer::receive->onSubscribe")
+                        disposable = d
                     }
 
                     override fun onNext(t: Int) {
                         Log.e(TAG, "Observer::receive->$t")
+                        if(t==2){
+                            disposable?.dispose()
+                        }
                     }
 
                 })

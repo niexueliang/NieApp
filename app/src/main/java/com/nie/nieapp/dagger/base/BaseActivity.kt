@@ -10,7 +10,7 @@ import dagger.android.AndroidInjection
  * Created by code_nil on 2018/1/30.
  * 君子自强不息
  */
-open class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
     lateinit var lifecycleObserver: BaseLifecycleObserver
 
     private val wifiReceiver = WifiReceiver {
@@ -28,6 +28,6 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
-    open fun responseWifiReceiver(code: Int) {}
+    abstract fun responseWifiReceiver(code: Int)
 
 }

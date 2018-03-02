@@ -8,28 +8,18 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:name=".dagger.base.App"
+        android:name=".dagger.base.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".glide.GlideActivity" />
-        <activity android:name=".dagger.module.Dagger2Activity" />
-        <activity android:name=".dagger.inject.InjectActivity" />
-        <activity android:name=".dagger.case1.Case1Activity" />
-        <activity android:name=".dagger.normal.NormalActivity" />
-        <activity android:name=".dagger.optandroid.OptActivity" />
         <activity
             android:name=".task.T1Activity"
-            android:launchMode="standard">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:launchMode="standard" />
         <activity
             android:name=".task.T2Activity"
             android:launchMode="singleTop" />
@@ -39,6 +29,17 @@
         <activity
             android:name=".task.T4Activity"
             android:launchMode="singleInstance" />
+        <activity android:name=".mvvm.MvvmActivity">
+        </activity>
+        <activity android:name=".dagger.case1.Case1Activity"/>
+        <activity android:name=".dagger.case2.Case2Activity"/>
+        <activity android:name=".dagger.da.DaggerCommonActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
