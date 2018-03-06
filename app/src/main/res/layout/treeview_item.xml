@@ -30,7 +30,6 @@
             android:layout_marginLeft="46px"
             android:layout_toRightOf="@id/tree_type_icon"
             android:text="@{element.treeName}"
-            android:textColor="@{element.treeType?@color/color_4bbaeb:@color/color_f17b41}"
             android:textSize="55px" />
 
         <ImageView
@@ -50,7 +49,6 @@
             android:layout_marginLeft="40px"
             android:layout_toRightOf="@id/tree_switch"
             android:text="@{element.treeDescription}"
-            android:textColor="@{element.treeType?@color/color_4bbaeb:@color/color_f17b41}"
             android:textSize="55px" />
 
         <TextView
@@ -61,7 +59,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="40px"
             android:text="@{String.valueOf(element.treeNum)}"
-            android:textColor="@{element.treeType?@color/color_4bbaeb:@color/color_f17b41}"
             android:textSize="55px" />
     </com.zhy.autolayout.AutoRelativeLayout>
 </layout>

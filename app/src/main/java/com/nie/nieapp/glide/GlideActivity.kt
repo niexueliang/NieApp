@@ -10,7 +10,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.nie.nieapp.R
 import com.nie.nieapp.databinding.ActivityGlideBinding
-import kotlinx.android.synthetic.main.activity_glide.*
 
 class GlideActivity : AppCompatActivity() {
     //http://d.hiphotos.baidu.com/image/pic/item/a044ad345982b2b713b5ad7d3aadcbef76099b65.jpg

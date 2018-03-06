@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.3.1'
 
     //4.4需要使用27
-    kapt 'com.github.bumptech.glide:compiler:4.3.1'
+    kapt 'com.github.bumptech.glide:compiler:4.5.0'
 
     //kotlin'中使用注解AppGlideModule
 
@@ -90,15 +90,15 @@ dependencies {
     kapt "com.android.databinding:compiler:3.0.1"
 
     //dagger2依赖注入
-    compile 'com.google.dagger:dagger:2.11'
+    compile 'com.google.dagger:dagger:2.14.1'
     //基础库
-    kapt 'com.google.dagger:dagger-compiler:2.11'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
     //基础库
-    implementation 'com.google.dagger:dagger-android:2.11'
+    implementation 'com.google.dagger:dagger-android:2.14.1'
     //增强库 可选
-    implementation 'com.google.dagger:dagger-android-support:2.11'
+    implementation 'com.google.dagger:dagger-android-support:2.14.1'
     //增强库 可选
-    kapt 'com.google.dagger:dagger-android-processor:2.11'
+    kapt 'com.google.dagger:dagger-android-processor:2.14.1'
 
     // Architecture components
     implementation 'android.arch.lifecycle:runtime:1.1.0'
@@ -115,7 +115,9 @@ dependencies {
     implementation files('libs/commons-net-3.6.jar')
 
     //低版本dex混淆的问题
-    compile 'com.android.support:multidex:1.0.2'
+    compile 'com.android.support:multidex:1.0.3'
 
     compile 'com.android.support:recyclerview-v7:26.1.0'
+    //完美适配方案框架
+    implementation 'com.zhy:autolayout:1.4.5'
 }
