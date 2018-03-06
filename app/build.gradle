@@ -116,4 +116,6 @@ dependencies {
 
     //低版本dex混淆的问题
     compile 'com.android.support:multidex:1.0.2'
+
+    compile 'com.android.support:recyclerview-v7:26.1.0'
 }
