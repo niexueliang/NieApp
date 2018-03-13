@@ -1,9 +1,11 @@
-package com.xly.netservice.net
+package com.nie.nieapp.net
 
 import com.google.gson.JsonObject
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.http.*
 
 /**
  * 说明：
@@ -12,4 +14,8 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("top250")
     fun getTopMovie(@Query("start") start: Int, @Query("count") count: Int): Observable<JsonObject>
+
+    @Multipart
+    @POST("upload.action")
+    fun uploadFile(@Part partList: List<MultipartBody.Part>): Call<ResponseBody>
 }

@@ -1,7 +1,6 @@
 package com.nie.nieapp.net
 
 import android.content.Context
-import com.xly.netservice.net.ApiService
 import com.xly.netservice.net.OkhttpStrategy
 import dagger.Module
 import dagger.Provides
@@ -19,7 +18,8 @@ import javax.inject.Named
  */
 @Module
 class ApiModule {
-    val BASE_URL = "https://api.douban.com/v2/movie/"
+    //    val BASE_URL = "https://api.douban.com/v2/movie/"
+    val BASE_URL = "http://192.168.0.132:8080/JsonWeb/"
     //读超时长，单位：毫秒
     val READ_TIME_OUT = 7676L
     //连接时长，单位：毫秒

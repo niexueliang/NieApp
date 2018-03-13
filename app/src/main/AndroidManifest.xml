@@ -30,15 +30,15 @@
             android:name=".task.T4Activity"
             android:launchMode="singleInstance" />
         <activity android:name=".mvvm.MvvmActivity">
-        </activity>
-        <activity android:name=".dagger.case1.Case1Activity"/>
-        <activity android:name=".dagger.case2.Case2Activity"/>
-        <activity android:name=".dagger.da.DaggerCommonActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".dagger.case1.Case1Activity"/>
+        <activity android:name=".dagger.case2.Case2Activity"/>
+        <activity android:name=".dagger.da.DaggerCommonActivity">
         </activity>
     </application>
 

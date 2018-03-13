@@ -2,7 +2,7 @@ package com.nie.nieapp.mvvm.model
 
 import com.nie.nieapp.mvvm.room.User
 import com.nie.nieapp.mvvm.room.UserDao
-import com.xly.netservice.net.ApiService
+import com.nie.nieapp.net.ApiService
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableOnSubscribe

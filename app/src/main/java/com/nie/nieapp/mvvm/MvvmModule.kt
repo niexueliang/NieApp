@@ -5,7 +5,7 @@ import com.nie.nieapp.mvvm.common.ViewModelFactory
 import com.nie.nieapp.mvvm.model.UserModel
 import com.nie.nieapp.mvvm.room.UserDao
 import com.nie.nieapp.mvvm.viewmodel.MvvmViewModel
-import com.xly.netservice.net.ApiService
+import com.nie.nieapp.net.ApiService
 import dagger.Module
 import dagger.Provides
 
