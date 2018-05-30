@@ -13,11 +13,11 @@ import java.io.InputStream
  * 君子自强不息
  */
 class FTP {
-    var hostName: String = "video.xlysoft.com"
-    var userName: String = "video_trans"
-    var password: String = "123456"
-    var serverPort: Int = FTPClient.DEFAULT_PORT
-    var shareDir: String = "video"
+    private var hostName: String = "192.168.100.2"
+    private var userName: String = "nie"
+    private var password: String = "123456"
+    private var serverPort: Int = FTPClient.DEFAULT_PORT
+    private var shareDir: String = "video"
     /**
      * FTP连接.
      */
@@ -40,9 +40,10 @@ class FTP {
      * @throws IOException
      */
     @Throws(IOException::class)
-    internal fun uploadingSingle(localFile: File, `is`: InputStream) {
-        ftpClient.storeFile(File.separator + shareDir + File.separator + localFile.name, `is`)
+    internal fun uploadingSingle(localFile: File) {
+        ftpClient.storeFile(File.separator + shareDir + File.separator + localFile.name, localFile.inputStream())
     }
+
 
     @Throws(IOException::class)
     internal fun downloadSingle(path: String, localSize: Long): InputStream? {
@@ -66,7 +67,6 @@ class FTP {
             e1.printStackTrace()
             beforeOperate = false
         }
-
         // 设置模式
         ftpClient.setFileTransferMode(org.apache.commons.net.ftp.FTP.STREAM_TRANSFER_MODE)
         // FTP下创建文件夹
@@ -112,7 +112,7 @@ class FTP {
         if (!FTPReply.isPositiveCompletion(reply)) {
             // 断开连接
             ftpClient.disconnect()
-            throw IOException("connect fail: " + reply)
+            throw IOException("connect fail: $reply")
         }
         // 登录到服务器
         ftpClient.login(userName, password)
@@ -121,7 +121,7 @@ class FTP {
         if (!FTPReply.isPositiveCompletion(reply)) {
             // 断开连接
             ftpClient.disconnect()
-            throw IOException("connect fail: " + reply)
+            throw IOException("connect fail: $reply")
         } else {
             // 获取登录信息
             val config = FTPClientConfig(ftpClient.systemType.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
@@ -132,7 +132,9 @@ class FTP {
             // 二进制文件支持
             ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE)
             //缓冲buffer每次50K，直接影响
-            ftpClient.bufferSize = 1024 * 64
+            ftpClient.bufferSize = 1024  * 64
+            //不允许延迟发送
+            ftpClient.tcpNoDelay = false
         }
     }
 

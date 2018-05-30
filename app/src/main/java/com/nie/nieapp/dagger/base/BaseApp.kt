@@ -19,10 +19,10 @@ import javax.inject.Inject
 class BaseApp : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
     @Inject
-    lateinit var dispatchingFragmentInjector: DispatchingAndroidInjector<Fragment>
+    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate() {
         super.onCreate()
@@ -30,10 +30,10 @@ class BaseApp : MultiDexApplication(), HasActivityInjector, HasSupportFragmentIn
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingAndroidInjector
+        return activityInjector
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingFragmentInjector
+        return fragmentInjector
     }
 }

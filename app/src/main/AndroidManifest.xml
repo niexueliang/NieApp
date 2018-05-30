@@ -15,7 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".glide.GlideActivity" />
         <activity
             android:name=".task.T1Activity"
@@ -29,17 +34,11 @@
         <activity
             android:name=".task.T4Activity"
             android:launchMode="singleInstance" />
-        <activity android:name=".mvvm.MvvmActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".dagger.case1.Case1Activity"/>
-        <activity android:name=".dagger.case2.Case2Activity"/>
-        <activity android:name=".dagger.da.DaggerCommonActivity">
-        </activity>
+        <activity android:name=".mvvm.MvvmActivity" />
+        <activity android:name=".dagger.case1.Case1Activity" />
+        <activity android:name=".dagger.case2.Case2Activity" />
+        <activity android:name=".dagger.da.DaggerCommonActivity" />
+        <activity android:name=".coroutine.CoroutineActivity"></activity>
     </application>
 
 </manifest>
